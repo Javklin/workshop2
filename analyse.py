@@ -92,7 +92,6 @@ root = tk.Tk()
 root.title("Clean Sphere Analyzer")
 send_button = tk.Button(root, text="Lancer l'analyse", command=get_response)
 send_button.pack()
-# Zone de conversation
 conversation_log = tk.Text(root, width=60, height=20)
 conversation_log.pack(pady=20)
 root.mainloop()
