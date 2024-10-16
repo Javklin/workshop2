@@ -31,7 +31,7 @@ class CompletionClient:
 # Configuration de l'API
 client = CompletionClient("http://127.0.0.1:8080")
 systemPrompt = """
-Tu es un assistant qui analyse du texte pour détecter si les messages qu'on t'envoie sont inapproprié (offensant, violent ou offensant).
+Tu es un assistant qui analyse du texte pour détecter si les messages qu'on t'envoie sont inapproprié (offensant, violent, cruel, méchant ou offensant).
 
 Pour chaque message reçu, tu réponds en format JSON comme dans ces exemples
 
@@ -54,7 +54,7 @@ def get_comments():
         'x-rapidapi-key': "",
         'x-rapidapi-host': ""
     }
-    conn.request("GET", "/user-tweets?user=1845880416332603392&count=2", headers=headers)
+    conn.request("GET", "/user-tweets?user=1845880416332603392&count=8", headers=headers)
     res = conn.getresponse()
     data = res.read()
     json_data = json.loads(data)
@@ -81,12 +81,13 @@ def get_comments():
     return(tweets)
         
 def get_response():
+    #TODO prendre les comment de l'api
     tweet_texts = get_comments()  
     #pour tester sans faire appel à l'API
-    #tweet_texts = ["j'aime bien les hamburger", "j'ai frappé une personne sans raison"]
+    #tweet_texts = ["j'aime bien les hamburger", "j'ai frappé une personne sans raison", "Le sujet du worshop de 2024 est génial", "Je vais te briser les côtes mec"]
     for tweet in tweet_texts:
         #full_prompt = systemPrompt + tweet  
-        full_prompt = systemPrompt + tweet  + "Est-ce acceptable ?"
+        full_prompt = systemPrompt + tweet  + "Est-ce acceptable et approprié ?"
         result = client.post_completion(prompt=full_prompt, temperature=0.0, n_predict=100, stop=["}"])
         response = CompletionResponse(result)
         user_response = response.get_content()
