@@ -51,10 +51,10 @@ def get_comments():
     #pour obtenir la cle d'API se créer un compte sur 
     #https://rapidapi.com/davethebeast/api/twitter241/playground/apiendpoint_e82a6196-d11d-430d-97a7-ee2aadaeecd7
     headers = {
-        'x-rapidapi-key': "f6d124b8c5mshe8d83becb0e3925p176fc5jsn6b249426d80f",
-        'x-rapidapi-host': "twitter241.p.rapidapi.com"
+        'x-rapidapi-key': "A_REMPLACER",
+        'x-rapidapi-host': "A_REMPLACER"
     }
-    conn.request("GET", "/user-tweets?user=1845880416332603392&count=8", headers=headers)
+    conn.request("GET", "/user-tweets?user=A_REMPLACER&count=8", headers=headers)
     res = conn.getresponse()
     data = res.read()
     json_data = json.loads(data)
