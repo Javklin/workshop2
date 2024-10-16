@@ -81,9 +81,9 @@ def get_comments():
     return(tweets)
         
 def get_response():
-    #tweet_texts = get_comments()  
+    tweet_texts = get_comments()  
     #pour tester sans faire appel à l'API
-    tweet_texts = ["j'aime bien les hamburger", "j'ai frappé une personne sans raison"]
+    #tweet_texts = ["j'aime bien les hamburger", "j'ai frappé une personne sans raison"]
     for tweet in tweet_texts:
         #full_prompt = systemPrompt + tweet  
         full_prompt = systemPrompt + tweet  + "Est-ce acceptable ?"
