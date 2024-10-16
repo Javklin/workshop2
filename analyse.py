@@ -51,17 +51,16 @@ def get_comments():
     #pour obtenir la cle d'API se créer un compte sur 
     #https://rapidapi.com/davethebeast/api/twitter241/playground/apiendpoint_e82a6196-d11d-430d-97a7-ee2aadaeecd7
     headers = {
-        'x-rapidapi-key': "",
-        'x-rapidapi-host': ""
+        'x-rapidapi-key': "A_REMPLACER",
+        'x-rapidapi-host': "A_REMPLACER"
     }
-    conn.request("GET", "/user-tweets?user=1845880416332603392&count=8", headers=headers)
+    conn.request("GET", "/user-tweets?user=A_REMPLACER&count=8", headers=headers)
     res = conn.getresponse()
     data = res.read()
     json_data = json.loads(data)
 
-    # Un tableau pour stocker les "full_text" de la reponse api
+    # tableau pour stocker les "full_text" de la reponse api
     tweets = []
-    # Parcours  pour extraire les tweets
     instructions = json_data['result']['timeline']['instructions']
 
     for instruction in instructions:
@@ -73,30 +72,22 @@ def get_comments():
                     if 'tweet_results' in item_content:
                         tweet_results = item_content['tweet_results']['result']
                         if 'legacy' in tweet_results and 'full_text' in tweet_results['legacy']:
-                            # Ajoute le full_text au tableau
                             tweets.append(tweet_results['legacy']['full_text'])
-
-    # Affiche le tableau contenant tous les full_text
     print(tweets)
     return(tweets)
         
 def get_response():
-    #TODO prendre les comment de l'api
     tweet_texts = get_comments()  
     #pour tester sans faire appel à l'API
     #tweet_texts = ["j'aime bien les hamburger", "j'ai frappé une personne sans raison", "Le sujet du worshop de 2024 est génial", "Je vais te briser les côtes mec"]
-    for tweet in tweet_texts:
-        #full_prompt = systemPrompt + tweet  
+    for tweet in tweet_texts: 
         full_prompt = systemPrompt + tweet  + "Est-ce acceptable et approprié ?"
         result = client.post_completion(prompt=full_prompt, temperature=0.0, n_predict=100, stop=["}"])
         response = CompletionResponse(result)
         user_response = response.get_content()
-
-        # Insert each tweet and its corresponding response in conversation_log
-        #conversation_log.insert(tk.END, f"User: {tweet}\nResponse: {user_response}\n\n")
         conversation_log.insert(tk.END, f"User: {tweet}\nResponse: {user_response}\n\n")
      
-# Création de la fenêtre principale
+# la fenêtre principale
 root = tk.Tk()
 root.title("Clean Sphere Analyzer")
 send_button = tk.Button(root, text="Lancer l'analyse", command=get_response)
@@ -104,6 +95,5 @@ send_button.pack()
 # Zone de conversation
 conversation_log = tk.Text(root, width=60, height=20)
 conversation_log.pack(pady=20)
-# Démarrage de la boucle principale de Tkinter
 root.mainloop()
 
